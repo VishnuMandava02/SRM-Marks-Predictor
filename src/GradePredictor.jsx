@@ -48,55 +48,17 @@ const GradePredictor = () => {
     setSubjects(newSubjects);
   };
   
-  const styles = {
-    header: {
-      fontSize: '2.5em', fontWeight: 'bold', color: '#ffffff',
-      marginBottom: '30px', borderBottom: '2px solid #FF6600',
-      paddingBottom: '10px', textShadow: '0 0 5px #FF6600',
-    },
-    inputGrid: {
-      display: 'grid', gridTemplateColumns: '2fr 1fr',
-      gap: '20px',
-      marginBottom: '30px', padding: '25px', backgroundColor: 'rgba(10, 10, 10, 0.7)',
-      backdropFilter: 'blur(10px)', borderRadius: '10px', border: '1px solid rgba(255, 102, 0, 0.2)',
-    },
-    inputWrapper: { position: 'relative' },
-    inputIcon: {
-      position: 'absolute', top: '50%', left: '15px',
-      transform: 'translateY(-50%)', color: '#FF6600',
-    },
-    input: {
-      width: '100%', padding: '15px 15px 15px 45px', boxSizing: 'border-box',
-      border: '1px solid #2E1A00', borderRadius: '8px',
-      backgroundColor: 'rgba(0, 0, 0, 0.8)', color: '#ffffff', fontSize: '1em',
-    },
-    addButton: {
-      padding: '15px', backgroundColor: '#FF6600', color: '#000000',
-      border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '1em',
-      fontWeight: 'bold', display: 'flex', alignItems: 'center',
-      justifyContent: 'center', gap: '10px',
-    },
-    error: {
-      padding: '15px', backgroundColor: 'rgba(255, 50, 50, 0.2)', border: '1px solid #ff3232',
-      borderRadius: '8px', marginBottom: '20px', color: '#ffadad',
-      textAlign: 'center', fontWeight: 'bold',
-    },
-    subjectListContainer: {
-      marginTop: '20px',
-    }
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 style={styles.header}>🎯 Grade Prediction Engine</h2>
+      <h2 className="page-header">🎯 Grade Prediction Engine</h2>
 
       <AnimatePresence>
         {error && (
-          <motion.div style={styles.error}
+          <motion.div className="error-message"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -106,20 +68,23 @@ const GradePredictor = () => {
         )}
       </AnimatePresence>
 
-      <motion.div style={styles.inputGrid}
+      <motion.div className="input-grid-2col course-list-card" // Using card style
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div style={styles.inputWrapper}>
-          <FaClipboardCheck style={styles.inputIcon} />
+        <div className="input-wrapper">
+          <FaClipboardCheck className="input-icon" />
           <input
             type="number" value={newInternalMarks}
             onChange={(e) => setNewInternalMarks(e.target.value)}
-            placeholder="Enter Internal Marks (0-60)" min="0" max="60" style={styles.input}
+            placeholder="Enter Internal Marks (0-60)" min="0" max="60" 
+            className="input input-with-icon"
           />
         </div>
         <motion.button
-          onClick={addSubject} style={styles.addButton}
+          onClick={addSubject} 
+          className="add-button"
+          style={{marginTop: 0}} // Override margin
           whileHover={{ 
             scale: 1.05, 
             boxShadow: '0 0 15px #FF6600, 0 0 25px #FF6600' 
@@ -130,7 +95,7 @@ const GradePredictor = () => {
         </motion.button>
       </motion.div>
 
-      <div style={styles.subjectListContainer}>
+      <div style={{marginTop: '20px'}}>
         <AnimatePresence>
           {subjects.map(subject => (
             <SubjectCard 

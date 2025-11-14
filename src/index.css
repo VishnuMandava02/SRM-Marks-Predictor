@@ -1,6 +1,6 @@
 /* src/index.css */
 
-/* --- NEW: Black/Orange/Red "AI Mood" Palette --- */
+/* --- Static Black/Orange/Red "AI Mood" Palette --- */
 :root {
   /* Default: Black & Dark Orange (Good) */
   --color1: #000000;
@@ -29,9 +29,6 @@ body {
   height: 100vh;
   color: #f0f0f0;
   overflow: hidden;
-  
-  /* Smooth transition for color changes */
-  transition: background 1.5s ease;
 }
 
 @keyframes gradient {

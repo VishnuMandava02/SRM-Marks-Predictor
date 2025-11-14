@@ -28,13 +28,11 @@ const calculateExternalNeeded = (internal, targetTotal) => {
   return (needed_for_40 / 40) * 75;
 };
 
-// --- The Subject Card Component ---
 const SubjectCard = ({ subject, onDelete }) => {
   const [targetGrades, setTargetGrades] = useState([]);
   const [selectedResult, setSelectedResult] = useState(null);
   const [selectedGrade, setSelectedGrade] = useState(null);
 
-  // --- Calculate Target Grade RANGES on load ---
   useEffect(() => {
     const internal = subject.internal;
     const neededMarks = [];
@@ -79,96 +77,17 @@ const SubjectCard = ({ subject, onDelete }) => {
     setSelectedResult(neededText);
   };
 
-  // --- Styles ---
-  const styles = {
-    card: {
-      padding: '20px', backgroundColor: 'rgba(10, 10, 10, 0.7)',
-      backdropFilter: 'blur(10px)', borderRadius: '10px',
-      border: '1px solid rgba(255, 102, 0, 0.2)', marginBottom: '20px',
-    },
-    header: {
-      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-      borderBottom: '1px solid #FF6600', paddingBottom: '10px', marginBottom: '15px',
-    },
-    subjectName: { fontSize: '1.5em', color: '#FF6600', fontWeight: 'bold' },
-    internalInfo: { fontSize: '1.1em', color: '#c0c0c0', marginBottom: '20px' },
-    deleteButton: {
-      background: 'none', border: 'none', color: '#ff6b6b',
-      cursor: 'pointer', fontSize: '1.2em',
-    },
-    contentGrid: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 2fr', 
-      gap: '20px',
-    },
-    tableCard: {
-      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-      borderRadius: '8px', padding: '20px',
-    },
-    subHeader: {
-      fontSize: '1.2em', color: '#FF6600',
-      marginBottom: '10px', display: 'flex',
-      alignItems: 'center', gap: '10px',
-    },
-    table: { width: '100%', borderCollapse: 'collapse', marginTop: '10px' },
-    th: {
-      borderBottom: '2px solid #FF6600', padding: '10px',
-      textAlign: 'left', color: '#ffffff', fontSize: '0.9em',
-    },
-    td: { borderBottom: '1px solid #2E1A00', padding: '8px', fontSize: '0.9em' },
-    gradeButton: {
-      width: '100%',
-      padding: '10px',
-      fontSize: '1em',
-      fontWeight: 'bold',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      backgroundColor: 'rgba(255, 102, 0, 0.1)',
-      color: '#FF6600',
-      transition: 'all 0.2s ease',
-    },
-    gradeButtonActive: {
-      width: '100%',
-      padding: '10px',
-      fontSize: '1em',
-      fontWeight: 'bold',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      backgroundColor: '#FF6600',
-      color: '#000000',
-      boxShadow: '0 0 15px #FF6600',
-    },
-    resultBox: {
-      padding: '20px',
-      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-      borderRadius: '8px',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-    },
-    resultText: {
-      fontSize: '1.5em',
-      fontWeight: 'bold',
-      color: '#ffffff',
-      margin: '0',
-    },
-    resultIcon: {
-      marginRight: '10px',
-    }
-  };
-
   return (
-    <motion.div style={styles.card}
+    <motion.div className="predictor-card" // Using new class
+      style={{marginBottom: '20px'}}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -100 }}
     >
-      <div style={styles.header}>
-        <div style={styles.subjectName}>{subject.name}</div>
+      <div className="card-header">
+        <div className="card-title">{subject.name}</div>
         <motion.button 
-          style={styles.deleteButton} 
+          className="delete-button" 
           onClick={() => onDelete(subject.id)}
           whileHover={{ 
             scale: 1.2, 
@@ -180,27 +99,27 @@ const SubjectCard = ({ subject, onDelete }) => {
         </motion.button>
       </div>
 
-      <div style={styles.internalInfo}>
+      <div className="card-subtitle">
         <strong>Internal Marks:</strong> {subject.internal} / 60
       </div>
 
-      <div style={styles.contentGrid}>
+      <div className="predictor-layout">
         
-        <div style={styles.tableCard}>
-          <h4 style={styles.subHeader}>🏁 Select Target Grade</h4>
-          <table style={styles.table}>
+        <div className="course-list-card" style={{padding: '20px'}}>
+          <h4 className="sub-header" style={{fontSize: '1.2em'}}>🏁 Select Target Grade</h4>
+          <table className="table">
             <thead>
               <tr>
-                <th style={styles.th}>Grade</th>
-                <th style={styles.th}>Total (100)</th>
+                <th className="th">Grade</th>
+                <th className="th">Total (100)</th>
               </tr>
             </thead>
             <tbody>
               {targetGrades.map((item) => (
                 <tr key={item.grade}>
-                  <td style={{...styles.td, padding: '5px'}}>
+                  <td className="td" style={{padding: '5px'}}>
                     <motion.button
-                      style={selectedGrade === item.grade ? styles.gradeButtonActive : styles.gradeButton}
+                      className={selectedGrade === item.grade ? "grade-button-active" : "grade-button"}
                       onClick={() => handleGradeClick(item.grade, item.needed)}
                       whileHover={selectedGrade !== item.grade ? { 
                         backgroundColor: 'rgba(255, 102, 0, 0.3)',
@@ -211,15 +130,15 @@ const SubjectCard = ({ subject, onDelete }) => {
                       {item.grade}
                     </motion.button>
                   </td>
-                  <td style={styles.td}>{item.range}</td>
+                  <td className="td">{item.range}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        <div style={styles.resultBox}>
-          <h4 style={styles.subHeader}><FaBullseye /> Marks Needed (out of 75)</h4>
+        <div className="result-box">
+          <h4 className="sub-header" style={{fontSize: '1.2em'}}><FaBullseye /> Marks Needed (out of 75)</h4>
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedResult} 
@@ -228,20 +147,19 @@ const SubjectCard = ({ subject, onDelete }) => {
               exit={{ opacity: 0, y: -10 }}
             >
               {!selectedResult && (
-                <p style={{...styles.resultText, color: '#c0c0c0', fontSize: '1.2em'}}>
+                <p className="result-text" style={{color: '#c0c0c0', fontSize: '1.2em'}}>
                   Click a grade on the left.
                 </p>
               )}
               
               {selectedResult && (
-                <p style={{
-                  ...styles.resultText,
+                <p className="result-text" style={{
                   color: selectedResult.startsWith('Guaranteed') ? '#69f0ae' : 
                          selectedResult.startsWith('Impossible') ? '#ff6b6b' : 
                          selectedResult.startsWith('You will fail') ? '#ff9e80' : '#ffffff'
                 }}>
-                  {selectedResult.startsWith('Guaranteed') && <FaCheckCircle style={styles.resultIcon} />}
-                  {selectedResult.startsWith('Impossible') && <FaTimesCircle style={styles.resultIcon} />}
+                  {selectedResult.startsWith('Guaranteed') && <FaCheckCircle className="result-icon" />}
+                  {selectedResult.startsWith('Impossible') && <FaTimesCircle className="result-icon" />}
                   {selectedResult}
                 </p>
               )}

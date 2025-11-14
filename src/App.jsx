@@ -11,7 +11,6 @@ import {
 import GradePredictor from './GradePredictor'; 
 import GpaCalculator from './GpaCalculator';   
 import Dashboard from './Dashboard'; 
-// We no longer import AiHeader
 import Resources from './Resources';
 import './App.css'; 
 
@@ -75,7 +74,6 @@ function App() {
   }, [semesters]); 
   // --- End of feature ---
 
-  // --- Glitter Hover for Sidebar (Orange) ---
   const sidebarHover = {
     scale: 1.05,
     backgroundColor: "rgba(255, 102, 0, 0.1)",
@@ -85,7 +83,7 @@ function App() {
   };
 
   return (
-    // Reverted to the simple ".App" layout
+    // This is the simple 2-column layout
     <div className="App">
       
       {/* --- Sidebar --- */}
